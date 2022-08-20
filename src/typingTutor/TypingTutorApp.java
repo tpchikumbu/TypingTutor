@@ -27,6 +27,7 @@ public class TypingTutorApp {
 
 	static FallingWord[] words;
 	static WordMover[] wrdShft;
+	static HungryWordMover[] hngrShft;
 	static CountDownLatch startLatch; //so threads can start at once
 	
 	static AtomicBoolean started;  
@@ -191,10 +192,12 @@ public class TypingTutorApp {
 		//create threads to move them
 	    for (int i=0;i<noWords;i++) {
 	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
+	    		//hngrShft[i] = new HungryWordMover(words[i],dict,score,startLatch,done,pause);
 	    }
         //word movers waiting on starting line
      	for (int i=0;i<noWords;i++) {
-     		wrdShft[i] .start();
+     		wrdShft[i].start();
+     		//hngrShft[i].start();
      	}
 	}
 	
@@ -244,6 +247,7 @@ public static void main(String[] args) {
 		
 		words = new FallingWord[noWords];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
+		hngrShft = new HungryWordMover[1]; //array to animate hungry words
 		
 		CatchWord.setWords(words);  //class setter - static method
 		CatchWord.setScore(score);  //class setter - static method

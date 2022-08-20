@@ -31,17 +31,22 @@ public class CatchWord extends Thread {
 	}
 	
 	public void run() {
-		int i=0;
+		int lowest=0, dist=0, i=0;
 		while (i<noWords) {		
 			while(pause.get()) {};
-			if (words[i].matchWord(target)) {
-				System.out.println( " score! '" + target); //for checking
-				score.caughtWord(target.length());	
-				//FallingWord.increaseSpeed();
-				break;
+			synchronized (words) {
+				if (words[i].getWord().equals(target) && words[i].getY() > dist) {
+					lowest = i;
+					dist = words[i].getY();
+				}
+				i++;
 			}
-		   i++;
 		}
-		
+		if (words[lowest].matchWord(target)) {
+			System.out.println( " score! '" + target); //for checking
+			score.caughtWord(target.length());	
+			//FallingWord.increaseSpeed();
+			//break;  you commented this out
+		}
 	}	
 }
