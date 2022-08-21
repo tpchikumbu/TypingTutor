@@ -1,11 +1,15 @@
 package typingTutor;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class FallingWord {
 	private String word; // the word
 	private int x; //position - width
 	private int y; // postion - height
 	private int maxY; //maximum height
+	private int maxX; //maximum width
 	private boolean dropped; //flag for if user does not manage to catch word in time
+	private AtomicBoolean hungry; //flag for if user does not manage to catch word in time
 	
 	private int fallingSpeed; //how fast this word is
 	private static int maxWait=1000;
@@ -19,6 +23,7 @@ public class FallingWord {
 		y=0;	
 		maxY=300;
 		dropped=false;
+		hungry.set(false);
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 	}
 	
@@ -31,6 +36,10 @@ public class FallingWord {
 		this(text);
 		this.x=x; //only need to set x, word is at top of screen at start
 		this.maxY=maxY;
+	}
+	FallingWord(String text,int x, int maxY, boolean hunger) { // additional constructor to specify if a word is hungry or not
+		this(text,x,maxY);
+		this.hungry.set(hunger);
 	}
 	
 	public static void increaseSpeed( ) {
@@ -54,6 +63,10 @@ public class FallingWord {
 	}
 	
 	public synchronized  void setX(int x) {
+		if (x>maxX) {
+			x=maxX;
+			dropped=true; //user did not manage to catch this word
+		}
 		this.x=x;
 	}
 	
@@ -82,7 +95,12 @@ public class FallingWord {
 		setX(x);
 	}
 	public synchronized void resetPos() {
-		setY(0);
+		if (this.hungry.get()) {
+			setX(0);
+		}
+		else {
+			setY(0);
+		}
 	}
 
 	public synchronized void resetWord() {
@@ -105,6 +123,9 @@ public class FallingWord {
 
 	public synchronized  void drop(int inc) {
 		setY(y+inc);
+	}
+	public synchronized  void slide(int inc) {
+		setX(x+inc);
 	}
 	
 	public synchronized  boolean dropped() {

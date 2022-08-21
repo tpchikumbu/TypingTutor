@@ -225,7 +225,7 @@ public static void main(String[] args) {
 		pause = new AtomicBoolean(false);
 		won = new AtomicBoolean(false);
 		
-		totalWords=24;
+		totalWords=30;
 		noWords=6;
 		dict= new WordDictionary();
 		
