@@ -39,7 +39,7 @@ public class WordMover extends Thread {
 		while (!done.get()) {				
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
-				    myWord.slide(10);
+				    myWord.drop(10);
 					try {
 						sleep(myWord.getSpeed());
 					} catch (InterruptedException e) {

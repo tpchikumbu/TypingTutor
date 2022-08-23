@@ -9,7 +9,7 @@ public class FallingWord {
 	private int maxY; //maximum height
 	private int maxX; //maximum width
 	private boolean dropped; //flag for if user does not manage to catch word in time
-	private AtomicBoolean hungry; //flag for if user does not manage to catch word in time
+	private AtomicBoolean hungry ; //flag for if user does not manage to catch word in time
 	
 	private int fallingSpeed; //how fast this word is
 	private static int maxWait=1000;
@@ -22,8 +22,9 @@ public class FallingWord {
 		x=0;
 		y=0;	
 		maxY=300;
+		maxX=900;
 		dropped=false;
-		hungry.set(false);
+		hungry = new AtomicBoolean(false);
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 	}
 	
@@ -37,9 +38,10 @@ public class FallingWord {
 		this.x=x; //only need to set x, word is at top of screen at start
 		this.maxY=maxY;
 	}
-	FallingWord(String text,int x, int maxY, boolean hunger) { // additional constructor to specify if a word is hungry or not
+	FallingWord(String text,int x, int maxY, int y, boolean hunger) { // additional constructor to specify if a word is hungry or not
 		this(text,x,maxY);
-		this.hungry.set(hunger);
+		this.y = y;
+		this.hungry = new AtomicBoolean(hunger);
 	}
 	
 	public static void increaseSpeed( ) {

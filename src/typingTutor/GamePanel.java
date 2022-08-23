@@ -64,6 +64,12 @@ public class GamePanel extends JPanel implements Runnable {
 			return x;
 		}
 		
+		public int getValidYpos() {
+			int height = getHeight()-borderWidth*6;
+			int y= (int)(Math.random() * height) + borderWidth;
+			return y;
+		}
+		
 		public void run() {
 			while (true) {
 				repaint();
