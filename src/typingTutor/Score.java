@@ -29,12 +29,12 @@ public class Score {
 		return gameScore;
 	}
 	
-	synchronized public void missedWord() {
-		missedWords++;
+	synchronized public void missedWord(FallingWord word) {
+		missedWords+=word.getValue();
 	}
-	synchronized public void caughtWord(int length) {
-		caughtWords++;
-		gameScore+=length;
+	synchronized public void caughtWord(FallingWord word) {
+		caughtWords+=word.getValue();
+		gameScore+=word.getWeight();;
 	}
 
 	synchronized public void reset() {

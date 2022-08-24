@@ -40,7 +40,7 @@ public class HungryWordMover extends Thread {
 		while (!done.get()) {				
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
-				    myWord.slide(10);
+				    myWord.slide(15);
 					try {
 						sleep(myWord.getSpeed());
 					} catch (InterruptedException e) {
@@ -50,7 +50,7 @@ public class HungryWordMover extends Thread {
 					while(pause.get()&&!done.get()) {};
 			}
 			if (!done.get() && myWord.dropped()) {
-				score.missedWord();
+				score.missedWord(myWord);
 				myWord.resetWord();
 			}
 			myWord.resetWord();

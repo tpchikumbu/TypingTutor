@@ -5,11 +5,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class FallingWord {
 	private String word; // the word
 	private int x; //position - width
-	private int y; // postion - height
+	private int y; //position - height
 	private int maxY; //maximum height
 	private int maxX; //maximum width
+	private int weight; //amount to add to counter if word is caught 
+	private int value; //how many words this counts as
+	
 	private boolean dropped; //flag for if user does not manage to catch word in time
-	private AtomicBoolean hungry ; //flag for if user does not manage to catch word in time
+	private AtomicBoolean hungry ; //flag denoting a word that moves horizontally
 	
 	private int fallingSpeed; //how fast this word is
 	private static int maxWait=1000;
@@ -23,6 +26,8 @@ public class FallingWord {
 		y=0;	
 		maxY=300;
 		maxX=900;
+		weight=word.length();
+		value=1;
 		dropped=false;
 		hungry = new AtomicBoolean(false);
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
@@ -31,6 +36,7 @@ public class FallingWord {
 	FallingWord(String text) { 
 		this();
 		this.word=text;
+		this.weight=word.length();
 	}
 	
 	FallingWord(String text,int x, int maxY) { //most commonly used constructor - sets it all.
@@ -75,7 +81,23 @@ public class FallingWord {
 	public synchronized  void setWord(String text) {
 		this.word=text;
 	}
-
+	
+	public synchronized  void setWeight(int kg) {
+		this.weight=kg;
+	}
+	
+	public synchronized  void setValue(int worth) {
+		this.value = worth;
+	}
+	
+	public synchronized  void addWeight(int kg) {
+		this.weight += kg;
+	}
+	
+	public synchronized  void addValue(int worth) {
+		this.value += worth;
+	}
+	
 	public synchronized  String getWord() {
 		return word;
 	}
@@ -90,6 +112,18 @@ public class FallingWord {
 	
 	public synchronized  int getSpeed() {
 		return fallingSpeed;
+	}
+	
+	public synchronized  int getWeight() {
+		return this.weight;
+	}
+	
+	public synchronized  int getValue() {
+		return this.value;
+	}
+	
+	public synchronized  boolean hungry() {
+		return this.hungry.get();
 	}
 
 	public synchronized void setPos(int x, int y) {
@@ -116,11 +150,17 @@ public class FallingWord {
 	public synchronized boolean matchWord(String typedText) {
 		//System.out.println("Matching against: "+text);
 		if (typedText.equals(this.word)) {
-			resetWord();
+			//resetWord();
 			return true;
 		}
 		else
 			return false;
+	}
+	public synchronized void eat(FallingWord other) {
+		//add the score from another word to another if they overlap and the calling word is hungry
+		this.addValue(other.getValue());
+		this.addWeight(other.getWeight());
+		other.resetWord();
 	}
 
 	public synchronized  void drop(int inc) {

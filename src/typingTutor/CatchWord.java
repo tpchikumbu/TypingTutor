@@ -30,23 +30,30 @@ public class CatchWord extends Thread {
 		pause=p;
 	}
 	
+	//add function for hungry word to eat others
+		
+	
+	
 	public void run() {
 		int lowest=0, dist=0, i=0;
 		while (i<noWords) {		
 			while(pause.get()) {};
 			synchronized (words) {
-				if (words[i].getWord().equals(target) && words[i].getY() > dist) {
+				if (words[i].matchWord(target) && words[i].getY() > dist) {
 					lowest = i;
 					dist = words[i].getY();
 				}
 				i++;
 			}
 		}
-		if (words[lowest].matchWord(target)) {
-			System.out.println( " score! '" + target); //for checking
-			score.caughtWord(target.length());	
-			//FallingWord.increaseSpeed();
-			//break;  you commented this out
+		synchronized (words[lowest]) {
+			if (words[lowest].matchWord(target)) {
+				System.out.println( " score! '" + target); //for checking
+				score.caughtWord(words[lowest]);
+				words[lowest].resetWord();
+				//FallingWord.increaseSpeed();
+				//break;  you commented this out
+			}
 		}
 	}	
 }

@@ -49,7 +49,7 @@ public class WordMover extends Thread {
 					while(pause.get()&&!done.get()) {};
 			}
 			if (!done.get() && myWord.dropped()) {
-				score.missedWord();
+				score.missedWord(myWord);
 				myWord.resetWord();
 			}
 			myWord.resetWord();

@@ -104,6 +104,7 @@ public class TypingTutorApp {
 		    	started.set(true);
 		    	if (pause.get()) { //this is a restart from pause
 		    		pause.set(false);
+		    		textEntry.setText(""); //prevent cheating by clearing text entry upon unpausing the game
 		    	} else { //user quit last game
 		    		score.reset();
 					FallingWord.resetSpeed();
