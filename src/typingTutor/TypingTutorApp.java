@@ -194,7 +194,12 @@ public class TypingTutorApp {
 				words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),yLimit);
 			}
 			else {
-				words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getValidYpos(),true);
+				if (diff > 1) {
+					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getValidYpos(),true);
+				}
+				else {
+					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getMidY(),true);
+				}
 			}
 		}
 		//create threads to move them
@@ -242,7 +247,7 @@ public static void main(String[] args) {
 		won = new AtomicBoolean(false);
 		
 		totalWords=30;
-		noWords=6;
+		noWords=10;
 		dict= new WordDictionary();
 		
 		//deal with command line arguments

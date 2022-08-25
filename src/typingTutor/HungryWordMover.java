@@ -42,7 +42,10 @@ public class HungryWordMover extends WordMover {
 			while (!myWord.dropped() && !done.get()) {
 				    myWord.slide(15);
 				    for (FallingWord word : words) {
-				    	synchronized (word) {
+				    	synchronized (words) {
+				    		//System.out.println("The word "+myWord.getWord()+ " overlaps with "+word.getWord()+ " :  " + myWord.overlap(word));
+				    		//System.out.println(myWord.getWord() + " at "+myWord.getX()+ ", "+ myWord.getY()+ " overlaps with "+word.getWord()+ " at position: " +word.getX()+ ", "+ word.getY() );
+				    		//System.out.println();
 				    		if (!word.hungry() && myWord.overlap(word)) {
 				    			myWord.eat(word);
 				    		}
