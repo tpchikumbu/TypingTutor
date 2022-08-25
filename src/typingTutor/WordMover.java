@@ -4,11 +4,13 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WordMover extends Thread {
-	private FallingWord myWord;
-	private AtomicBoolean done;
-	private AtomicBoolean pause; 
-	private Score score;
+	protected FallingWord myWord;
+	protected AtomicBoolean done;
+	protected AtomicBoolean pause; 
+	protected Score score;
 	CountDownLatch startLatch; //so all can start at once
+	
+	WordMover() {}
 	
 	WordMover( FallingWord word) {
 		myWord = word;

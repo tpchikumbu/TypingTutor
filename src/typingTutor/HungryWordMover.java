@@ -3,24 +3,24 @@ package typingTutor;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class HungryWordMover extends Thread {
-	private FallingWord myWord;
-	private AtomicBoolean done;
-	private AtomicBoolean pause; 
-	private Score score;
-	CountDownLatch startLatch; //so all can start at once
+public class HungryWordMover extends WordMover {
+	//private FallingWord myWord;
+	//private AtomicBoolean done;
+	//private AtomicBoolean pause; 
+	//private Score score;
+	//CountDownLatch startLatch; //so all can start at once
+	private FallingWord[] words; //stores all words to be able to check if overlapping
+	
+	HungryWordMover() {}
 	
 	HungryWordMover( FallingWord word) {
-		myWord = word;
+		super(word);;
 	}
 	
 	HungryWordMover( FallingWord word,WordDictionary dict, Score score,
-			CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p) {
-		this(word);
-		this.startLatch = startLatch;
-		this.score=score;
-		this.done=d;
-		this.pause=p;
+			CountDownLatch startLatch, AtomicBoolean d, AtomicBoolean p, FallingWord[] words) {
+		super(word, dict, score, startLatch, d, p);
+		this.words = words;
 	}
 	
 	
@@ -41,6 +41,13 @@ public class HungryWordMover extends Thread {
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
 				    myWord.slide(15);
+				    for (FallingWord word : words) {
+				    	synchronized (word) {
+				    		if (!word.hungry() && myWord.overlap(word)) {
+				    			myWord.eat(word);
+				    		}
+				    	}
+				    }
 					try {
 						sleep(myWord.getSpeed());
 					} catch (InterruptedException e) {

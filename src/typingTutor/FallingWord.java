@@ -156,6 +156,23 @@ public class FallingWord {
 		else
 			return false;
 	}
+	
+	public synchronized boolean overlap(FallingWord other) {
+		// uses rectangular hit boxes to determine if two words collide
+		boolean botL, botR, topL, topR;
+		int xlim1 = this.x + (10*(this.word).length());
+		int xlim2 = other.x + (10*(other.word).length());
+		int ylim1 = this.y - (26);
+		int ylim2 = other.y - (26);
+		
+		botL = ((other.y <= ylim1 && other.y >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if bottom left of argument word overlaps with calling word
+		botR = ((other.y <= ylim1 && other.y >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if bottom right of argument word overlaps with calling word
+		topL = ((ylim2 <= ylim1 && ylim2 >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if top left of argument word overlaps with calling word
+		topR = ((ylim2 <= ylim1 && ylim2 >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if top right of argument word overlaps with calling word
+		
+		return botL | botR | topL | topR ;
+	}
+	
 	public synchronized void eat(FallingWord other) {
 		//add the score from another word to another if they overlap and the calling word is hungry
 		this.addValue(other.getValue());

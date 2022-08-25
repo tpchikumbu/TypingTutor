@@ -203,7 +203,7 @@ public class TypingTutorApp {
 	    		wrdShft[i] = new WordMover(words[i],dict,score,startLatch,done,pause);
 	    	}
 	    	else {
-	    		hngrShft[i-noWords] = new HungryWordMover(words[i],dict,score,startLatch,done,pause);
+	    		hngrShft[i-noWords] = new HungryWordMover(words[i],dict,score,startLatch,done,pause,words);
 			}
 	    }
         //word movers waiting on starting line
