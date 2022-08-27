@@ -25,7 +25,7 @@ public class FallingWord {
 		x=0;
 		y=0;	
 		maxY=300;
-		maxX=900;
+		maxX=950;
 		weight=word.length();
 		value=1;
 		dropped=false;
@@ -71,9 +71,13 @@ public class FallingWord {
 	}
 	
 	public synchronized  void setX(int x) {
-		if (x>maxX) {
+		if (x>maxX && hungry.get()) {
 			x=maxX;
 			dropped=true; //user did not manage to catch this word
+		}
+		//adjust word position to always fit within window
+		if (x>(maxX-(17*(this.word).length())) && !hungry.get()) {
+			x=(17*(this.word).length());
 		}
 		this.x=x;
 	}
@@ -162,15 +166,18 @@ public class FallingWord {
 	public synchronized boolean overlap(FallingWord other) {
 		// uses rectangular hit boxes to determine if two words collide
 		boolean botL, botR, topL, topR;
+		FallingWord bigger=this;
+		FallingWord smaller = other;
+		
+		if (this.word.length()<other.word.length()) {
+			bigger=other;
+			smaller=this;
+		}
+		
 		int xlim1 = this.x + (17*(this.word).length());
 		int xlim2 = other.x + (17*(other.word).length());
 		int ylim1 = this.y + (25);
 		int ylim2 = other.y + (25);
-		
-		//botL = ((other.y <= ylim1 && other.y >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if bottom left of argument word overlaps with calling word
-		//botR = ((other.y <= ylim1 && other.y >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if bottom right of argument word overlaps with calling word
-		//topL = ((ylim2 <= ylim1 && ylim2 >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if top left of argument word overlaps with calling word
-		//topR = ((ylim2 <= ylim1 && ylim2 >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if top right of argument word overlaps with calling word
 		
 		topL = ((other.y <= ylim1 && other.y >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if bottom left of argument word overlaps with calling word
 		topR = ((other.y <= ylim1 && other.y >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if bottom right of argument word overlaps with calling word
@@ -179,7 +186,7 @@ public class FallingWord {
 		
 		// addition to prioritize checking corners for smaller word
 		
-		//System.out.println("botL: " + botL+", botR: "+ botR +", topL: "+topL+", topR: "+topR);
+		
 		return botL || botR || topL || topR ;
 	}
 	
@@ -191,6 +198,7 @@ public class FallingWord {
 	}
 
 	public synchronized  void drop(int inc) {
+		setX(x);
 		setY(y+inc);
 	}
 	public synchronized  void slide(int inc) {

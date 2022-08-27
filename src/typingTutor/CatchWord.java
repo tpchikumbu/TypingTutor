@@ -52,7 +52,6 @@ public class CatchWord extends Thread {
 				score.caughtWord(words[lowest]);
 				words[lowest].resetWord();
 				//FallingWord.increaseSpeed();
-				//break;  you commented this out
 			}
 		}
 	}	

@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TypingTutorApp {
 //shared class variables
-	static int diff=1;
+	static int diff=7;
 	static int noWords=4;
 	static int totalWords;
 
@@ -190,7 +190,7 @@ public class TypingTutorApp {
 	
 	public static void createWordMoverThreads() {
 		score.reset();
-	  	//initialize shared array of current words with the words for this game
+	  	//initialize array of current words with the words for this game. same array used for hungry and non-hungry words
 		for (int i=0;i<noWords+diff;i++) {
 			if (i<noWords) {
 				words[i]=new FallingWord(dict.getNewWord(),gameWindow.getValidXpos(),yLimit);
@@ -200,7 +200,7 @@ public class TypingTutorApp {
 					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getValidYpos(),true);
 				}
 				else {
-					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getMidY(),true);
+					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getMidY(),true); //
 				}
 			}
 		}
@@ -264,6 +264,14 @@ public static void main(String[] args) {
 					String[] tmpDict=getDictFromFile(args[2]); //file of words
 					if (tmpDict!=null)
 						dict= new WordDictionary(tmpDict);
+		} else if (args.length==4) {
+			totalWords=Integer.parseInt(args[0]);  //total words to fall
+			noWords=Integer.parseInt(args[1]); // total words falling at any point
+			assert(totalWords>=noWords); // 
+			String[] tmpDict=getDictFromFile(args[2]); //file of words
+			diff = Integer.parseInt(args[3]);
+			if (tmpDict!=null)
+				dict= new WordDictionary(tmpDict);
 		}
 				
 		FallingWord.dict=dict; //set the class dictionary for the words.
