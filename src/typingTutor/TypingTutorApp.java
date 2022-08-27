@@ -46,6 +46,7 @@ public class TypingTutorApp {
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
     	JFrame frame = new JFrame("Typing Tutor"); 
+    	
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setSize(frameX, frameY);
     	
@@ -170,6 +171,7 @@ public class TypingTutorApp {
       	frame.add(g); //add contents to window
         frame.setContentPane(g);     
        	//frame.pack();  // don't do this - packs it into small space
+        frame.setResizable(false);
         frame.setVisible(true);
 	}
 	

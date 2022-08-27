@@ -29,6 +29,7 @@ public class HungryWordMover extends WordMover {
 	public void run() {
 
 		//System.out.println(myWord.getWord() + " falling speed = " + myWord.getSpeed());
+	 	myWord.resetPos();
 		try {
 			System.out.println(myWord.getWord() + " waiting to start " );
 			startLatch.await();
@@ -40,7 +41,7 @@ public class HungryWordMover extends WordMover {
 		while (!done.get()) {				
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
-				    myWord.slide(15);
+				    myWord.slide(18);
 				    for (FallingWord word : words) {
 				    	synchronized (words) {
 				    		//System.out.println("The word "+myWord.getWord()+ " overlaps with "+word.getWord()+ " :  " + myWord.overlap(word));

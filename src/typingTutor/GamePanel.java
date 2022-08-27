@@ -37,8 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
 		    g.setFont(new Font("Arial", Font.PLAIN, 26));
 		   //draw the words
 		    if (!started.get()) {
-		    	g.setFont(new Font("Arial", Font.BOLD, 26));
-				g.drawString("Type all the words before they hit the red zone, \n press enter after each one.",borderWidth*2,height/2);	
+		    	g.setFont(new Font("Arial", Font.BOLD, 21));
+				g.drawString("Type all the words before they hit the red zone, press enter after each one.",borderWidth*2,height/2);	
 		    	
 		    }
 		    else if (!done.get()) {
@@ -48,18 +48,23 @@ public class GamePanel extends JPanel implements Runnable {
 		    		}
 		    		else {
 		    			g.setColor(Color.black);
+		    			
 		    		}
 		    		g.drawString(words[i].getWord(),words[i].getX()+borderWidth,words[i].getY());
 		    	}
 		    	g.setColor(Color.lightGray); //change colour of pen
+		    	g.fillRect(0,0,borderWidth,getHeight()-borderWidth);
+		    	g.fillRect(getWidth()-borderWidth,0,borderWidth,getHeight()-borderWidth);
 		    	g.fillRect(borderWidth,0,width,borderWidth);
 		   }
 		   else { if (won.get()) {
 			   g.setFont(new Font("Arial", Font.BOLD, 36));
-			   g.drawString("Well done!",width/3,height/2);	
+			   g.setColor(Color.green);
+			   g.drawString("Well done!",(getWidth()/2)-(g.getFontMetrics().stringWidth("Well done!")/2),(getHeight()/2)-g.getFontMetrics().getHeight());	
 		   } else {
 			   g.setFont(new Font("Arial", Font.BOLD, 36));
-			   g.drawString("Game over!",width/2,height/2);	
+			   g.setColor(Color.red);
+			   g.drawString("Game over!",(getWidth()/2)-(g.getFontMetrics().stringWidth("Game over!")/2),(getHeight()/2)-g.getFontMetrics().getHeight());	
 		   }
 		   }
 		}
@@ -77,8 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 		public int getMidY() {
-			int height = getHeight();
-			return height/2;
+			return (getHeight())/2;
 		}
 		
 		public void run() {

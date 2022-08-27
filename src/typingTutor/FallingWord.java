@@ -132,7 +132,7 @@ public class FallingWord {
 	}
 	public synchronized void resetPos() {
 		if (this.hungry.get()) {
-			setX(0);
+			setX(-(17*(word.length())));
 		}
 		else {
 			setY(0);
@@ -140,8 +140,8 @@ public class FallingWord {
 	}
 
 	public synchronized void resetWord() {
-		resetPos();
 		word=dict.getNewWord();
+		resetPos();
 		value = 1;
 		weight = word.length();
 		dropped=false;
@@ -162,10 +162,10 @@ public class FallingWord {
 	public synchronized boolean overlap(FallingWord other) {
 		// uses rectangular hit boxes to determine if two words collide
 		boolean botL, botR, topL, topR;
-		int xlim1 = this.x + (15*(this.word).length());
-		int xlim2 = other.x + (15*(other.word).length());
-		int ylim1 = this.y + (20);
-		int ylim2 = other.y + (20);
+		int xlim1 = this.x + (17*(this.word).length());
+		int xlim2 = other.x + (17*(other.word).length());
+		int ylim1 = this.y + (25);
+		int ylim2 = other.y + (25);
 		
 		//botL = ((other.y <= ylim1 && other.y >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if bottom left of argument word overlaps with calling word
 		//botR = ((other.y <= ylim1 && other.y >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if bottom right of argument word overlaps with calling word
@@ -179,7 +179,7 @@ public class FallingWord {
 		
 		// addition to prioritize checking corners for smaller word
 		
-		System.out.println("botL: " + botL+", botR: "+ botR +", topL: "+topL+", topR: "+topR);
+		//System.out.println("botL: " + botL+", botR: "+ botR +", topL: "+topL+", topR: "+topR);
 		return botL || botR || topL || topR ;
 	}
 	

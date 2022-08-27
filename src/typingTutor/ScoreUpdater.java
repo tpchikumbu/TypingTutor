@@ -33,10 +33,10 @@ public class ScoreUpdater  implements Runnable {
 		               caught.setText("Caught: " + score.getCaught() + "    ");
 		               missed.setText("Missed:" +  score.getMissed()+ "    " );
 		               scoreView.setText("Score:" + score.getScore()+ "    " );  //setText is thread safe (I think)
-					   //done.set(true); //game ends when missed 3
+					   done.set(true); //game ends when missed 3
 					   won.set(false);
 				} else if (score.getCaught()>=maxWords) {
-					   //done.set(true); //game ends when missed 3
+					   done.set(true); //game ends when missed 3
 					   won.set(true);
 		               caught.setText("Caught: " + score.getCaught() + "    ");
 		               missed.setText("Missed:" +  score.getMissed()+ "    " );
