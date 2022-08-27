@@ -4,7 +4,6 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HungryWordMover extends WordMover {
-	//CountDownLatch startLatch; //so all can start at once
 	private FallingWord[] words; //stores all words to be able to check if overlapping
 	
 	HungryWordMover() {}
@@ -30,7 +29,13 @@ public class HungryWordMover extends WordMover {
 			e1.printStackTrace();
 		} //wait for other threads to start
 		System.out.println(myWord.getWord() + " started" );
-		while (!done.get()) {				
+		while (!done.get()) {
+			//word waits before moving onto the screen
+			try {
+				sleep((int) (myWord.getWeight()*(5000*Math.random())));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			};
 			//animate the word
 			while (!myWord.dropped() && !done.get()) {
 				    myWord.slide(18);

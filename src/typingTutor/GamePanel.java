@@ -3,15 +3,15 @@ package typingTutor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;
-import java.util.concurrent.CountDownLatch;
+//import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-		private AtomicBoolean done ; //REMOVE
-		private AtomicBoolean started ; //REMOVE
-		private AtomicBoolean won ; //REMOVE
+		private AtomicBoolean done ;
+		private AtomicBoolean started ;
+		private AtomicBoolean won ;
 
 		private FallingWord[] words;
 		private int noWords;
@@ -21,9 +21,9 @@ public class GamePanel extends JPanel implements Runnable {
 				 AtomicBoolean d, AtomicBoolean s, AtomicBoolean w) {
 			this.words=words; //shared word list
 			noWords = words.length; //only need to do this once
-			done=d; //REMOVE
-			started=s; //REMOVE
-			won=w; //REMOVE
+			done=d;
+			started=s;
+			won=w;
 		}
 		
 		public void paintComponent(Graphics g) {

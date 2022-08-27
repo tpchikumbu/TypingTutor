@@ -34,7 +34,6 @@ public class WordMover extends Thread {
 			System.out.println(myWord.getWord() + " waiting to start " );
 			startLatch.await();
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} //wait for other threads to start
 		System.out.println(myWord.getWord() + " started" );
@@ -45,7 +44,6 @@ public class WordMover extends Thread {
 					try {
 						sleep(myWord.getSpeed());
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					};		
 					while(pause.get()&&!done.get()) {};

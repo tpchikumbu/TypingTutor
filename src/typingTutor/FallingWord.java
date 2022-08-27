@@ -60,7 +60,6 @@ public class FallingWord {
 		minWait=100;
 	}
 	
-
 // all getters and setters must be synchronized
 	public synchronized  void setY(int y) {
 		if (y>maxY) {
@@ -135,8 +134,9 @@ public class FallingWord {
 		setX(x);
 	}
 	public synchronized void resetPos() {
+		// initialize hungry word outside of game window
 		if (this.hungry.get()) {
-			setX(-(17*(word.length())));
+			setX(-(19*(word.length())));
 		}
 		else {
 			setY(0);
@@ -145,9 +145,9 @@ public class FallingWord {
 
 	public synchronized void resetWord() {
 		word=dict.getNewWord();
-		resetPos();
 		value = 1;
 		weight = word.length();
+		resetPos();
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
 		//System.out.println(getWord() + " falling speed = " + getSpeed());
@@ -164,41 +164,38 @@ public class FallingWord {
 	}
 	
 	public synchronized boolean overlap(FallingWord other) {
-		// uses rectangular hit boxes to determine if two words collide
+		// uses approximate corner positions to determine if two words collide
 		boolean botL, botR, topL, topR;
-		FallingWord bigger=this;
-		FallingWord smaller = other;
+		FallingWord bigger=this, smaller = other;
 		
+		//check for corners of smaller word inside the bigger one
 		if (this.word.length()<other.word.length()) {
 			bigger=other;
 			smaller=this;
 		}
 		
-		int xlim1 = this.x + (17*(this.word).length());
-		int xlim2 = other.x + (17*(other.word).length());
-		int ylim1 = this.y + (25);
-		int ylim2 = other.y + (25);
+		int xlim1 = bigger.x + (17*(bigger.word).length());
+		int xlim2 = smaller.x + (17*(smaller.word).length());
+		int ylim1 = bigger.y + (25);
+		int ylim2 = smaller.y + (25);
 		
-		topL = ((other.y <= ylim1 && other.y >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if bottom left of argument word overlaps with calling word
-		topR = ((other.y <= ylim1 && other.y >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if bottom right of argument word overlaps with calling word
-		botL = ((ylim2 <= ylim1 && ylim2 >= this.y) && (other.x >= this.x && other.x <= xlim1)); //check if top left of argument word overlaps with calling word
-		botR = ((ylim2 <= ylim1 && ylim2 >= this.y) && (xlim2 >= this.x && xlim2 <= xlim1)); //check if top right of argument word overlaps with calling word
-		
-		// addition to prioritize checking corners for smaller word
-		
+		topL = ((smaller.y <= ylim1 && smaller.y >= bigger.y) && (smaller.x >= bigger.x && smaller.x <= xlim1)); //check top left corner
+		topR = ((smaller.y <= ylim1 && smaller.y >= bigger.y) && (xlim2 >= bigger.x && xlim2 <= xlim1)); //check top right corner
+		botL = ((ylim2 <= ylim1 && ylim2 >= bigger.y) && (smaller.x >= bigger.x && smaller.x <= xlim1)); //check bottom left corner
+		botR = ((ylim2 <= ylim1 && ylim2 >= bigger.y) && (xlim2 >= bigger.x && xlim2 <= xlim1)); //check bottom right corner
 		
 		return botL || botR || topL || topR ;
 	}
 	
 	public synchronized void eat(FallingWord other) {
-		//add the score from another word to another if they overlap and the calling word is hungry
+		//add the score from another word to another if they overlap
 		this.addValue(other.getValue());
 		this.addWeight(other.getWeight());
 		other.resetWord();
 	}
 
 	public synchronized  void drop(int inc) {
-		setX(x);
+		setX(x); //used to reset x if initially created out of bounds
 		setY(y+inc);
 	}
 	public synchronized  void slide(int inc) {

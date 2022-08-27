@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TypingTutorApp {
 //shared class variables
-	static int diff=7;
+	static int diff=1; //scalar to make game more challenging
 	static int noWords=4;
 	static int totalWords;
 
@@ -27,7 +27,6 @@ public class TypingTutorApp {
 	static WordDictionary dict = new WordDictionary(); //use default dictionary, to read from file eventually
 
 	static FallingWord[] words;
-	//static FallingWord[] hungryWords;
 	static WordMover[] wrdShft;
 	static HungryWordMover[] hngrShft;
 	static CountDownLatch startLatch; //so threads can start at once
@@ -150,7 +149,7 @@ public class TypingTutorApp {
 		});  //finish addActionListener
 					
 		//the Exit Button
-		JButton endB = new JButton("Exit");;
+		JButton endB = new JButton("Exit");
 				// add the listener to the jbutton to handle the "pressed" event
 				endB.addActionListener(new ActionListener()
 			    {
@@ -159,7 +158,7 @@ public class TypingTutorApp {
 			    	  System.exit(0);
 			      }
 			    });
-	    
+				
        //add all the buttons
 		b.add(startB);
 		b.add(pauseB);
@@ -200,7 +199,7 @@ public class TypingTutorApp {
 					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getValidYpos(),true);
 				}
 				else {
-					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getMidY(),true); //
+					words[i]=new FallingWord(dict.getNewWord(),0,yLimit, gameWindow.getMidY(),true); //place hungry word in middle for easiest setting
 				}
 			}
 		}
@@ -248,8 +247,8 @@ public static void main(String[] args) {
 		pause = new AtomicBoolean(false);
 		won = new AtomicBoolean(false);
 		
-		totalWords=30;
-		noWords=10;
+		totalWords=24;
+		noWords=6;
 		dict= new WordDictionary();
 		
 		//deal with command line arguments
@@ -269,13 +268,14 @@ public static void main(String[] args) {
 			noWords=Integer.parseInt(args[1]); // total words falling at any point
 			assert(totalWords>=noWords); // 
 			String[] tmpDict=getDictFromFile(args[2]); //file of words
-			diff = Integer.parseInt(args[3]);
+			diff = Integer.parseInt(args[3]); //maximum number of hungry words
 			if (tmpDict!=null)
 				dict= new WordDictionary(tmpDict);
 		}
 				
 		FallingWord.dict=dict; //set the class dictionary for the words.
 		
+		noWords = noWords+((2*diff)-2);  //change number of words according to chosen difficulty
 		words = new FallingWord[noWords+diff];  //array for the  current chosen words from dict
 		wrdShft = new WordMover[noWords]; //array for the threads that animate the words
 		hngrShft = new HungryWordMover[diff]; //array to animate hungry words
@@ -290,4 +290,3 @@ public static void main(String[] args) {
     	createThreads();
        	}
 	}
-

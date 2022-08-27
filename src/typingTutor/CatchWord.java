@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //Thread to monitor the word that has been typed.
 public class CatchWord extends Thread {
 	String target;
-	static AtomicBoolean done ; //REMOVE
-	static AtomicBoolean pause; //REMOVE
+	static AtomicBoolean done ; 
+	static AtomicBoolean pause;
 	
 	private static  FallingWord[] words; //list of words
 	private static int noWords; //how many
@@ -30,15 +30,12 @@ public class CatchWord extends Thread {
 		pause=p;
 	}
 	
-	//add function for hungry word to eat others
-		
-	
-	
 	public void run() {
 		int lowest=0, dist=0, i=0;
 		while (i<noWords) {		
 			while(pause.get()) {};
 			synchronized (words) {
+				//store lowest word on screen that matches input
 				if (words[i].matchWord(target) && words[i].getY() > dist) {
 					lowest = i;
 					dist = words[i].getY();
