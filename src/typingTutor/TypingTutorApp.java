@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class TypingTutorApp {
 //shared class variables
 	static int diff=1; //scalar to make game more challenging
-	static int noWords=4;
+	static int noWords;
 	static int totalWords;
 
    	static int frameX=1000;

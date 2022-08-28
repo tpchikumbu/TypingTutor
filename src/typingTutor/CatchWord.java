@@ -36,10 +36,15 @@ public class CatchWord extends Thread {
 			while(pause.get()) {};
 			synchronized (words) {
 				//store lowest word on screen that matches input
-				if (words[i].matchWord(target) && words[i].getY() > dist) {
+				if (words[i].matchWord(target) && words[i].getY() > dist && words[i].getX() > 25) {
 					lowest = i;
 					dist = words[i].getY();
 				}
+				//prioritize matching the hungry word
+				/*else if (words[i].matchWord(target) && words[i].hungry()) {
+					lowest = i;
+					break;
+				}*/
 				i++;
 			}
 		}

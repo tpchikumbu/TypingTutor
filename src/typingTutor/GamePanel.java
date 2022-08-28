@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
 		    	
 		    }
 		    else if (!done.get()) {
+		    	g.setColor(Color.black);
 		    	for (int i=0;i<noWords;i++){
 		    		if (words[i].hungry()) {
 		    			g.setColor(Color.green);
@@ -89,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
 			while (true) {
 				repaint();
 				try {
-					Thread.sleep(10); 
+					Thread.sleep(5); 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				};

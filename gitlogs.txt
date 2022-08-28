@@ -1,0 +1,62 @@
+0: commit 73d303dd5a5c89564982a868a0a665d65ed6faa1
+1: Author: tpchikumbu <tpchikumbu@gmail.com>
+2: Date: Sat Aug 27 23:58:45 2022 +0200
+3:
+4: Documentation update
+5:
+6: commit 7423fe2bb7f3dee62ad1476bb62c9e0bc358d7b0
+7: Author: tpchikumbu <tpchikumbu@gmail.com>
+8: Date: Sat Aug 27 20:28:51 2022 +0200
+9:
+10: Always fit word to window border
+11:
+12: commit 9eacffc033820a6bef91f7d9f14735984ace8123
+13: Author: tpchikumbu <tpchikumbu@gmail.com>
+14: Date: Sat Aug 27 18:45:53 2022 +0200
+15:
+16: Improved UI and collision detection
+17:
+18: commit 7f3b8b4796fc4a21f54792168754501660e3dd58
+19: Author: tpchikumbu <tpchikumbu@gmail.com>
+20: Date: Fri Aug 26 01:31:03 2022 +0200
+21:
+22: Updated function to check if words overlap with new bounds
+23:
+24: commit 632bb6652db8e286d89c2fb8ade79d18b624e2ea
+25: Author: tpchikumbu <tpchikumbu@gmail.com>
+26: Date: Thu Aug 25 23:47:57 2022 +0200
+27:
+28: First attempt at adding collision between words
+29:
+30: commit 258aa19b42f191402c1a4c35a9239377548517fa
+31: Author: tpchikumbu <tpchikumbu@gmail.com>
+32: Date: Wed Aug 24 23:18:57 2022 +0200
+33:
+34: Made word green and added methods to implement one word eating another
+35:
+36: commit daf00b2cc2199e630674d3cc43e5276f240e58ff
+37: Author: tpchikumbu <tpchikumbu@gmail.com>
+38: Date: Tue Aug 23 12:01:07 2022 +0200
+39:
+40: First word able to move horizontally
+41:
+42: commit 41220d9725de64e87fc2d1d93396685427d7dda2
+43: Author: tpchikumbu <tpchikumbu@gmail.com>
+44: Date: Sun Aug 21 23:21:15 2022 +0200
+45:
+46: Added slide method to have a word move horizontally
+47:
+48: commit 47d9788cb7e2f39ebf7c62e80423fa8cb475037e
+49: Author: tpchikumbu <tpchikumbu@gmail.com>
+50: Date: Sat Aug 20 23:09:10 2022 +0200
+51:
+52: Additional features
+53:
+54: First attempt at catching lowest word on screen
+55: Created copy of WordMover to be used for hungry word
+56:
+57: commit 024348994806b924da032e38f378dc5b50cdec6e
+58: Author: tpchikumbu <tpchikumbu@gmail.com>
+59: Date: Tue Aug 16 10:51:04 2022 +0200
+60:
+61: creation of directory

@@ -65,6 +65,7 @@ public class FallingWord {
 		if (y>maxY) {
 			y=maxY;
 			dropped=true; //user did not manage to catch this word
+			System.out.println(getWord() + "  was dropped.");
 		}
 		this.y=y;
 	}
@@ -73,6 +74,7 @@ public class FallingWord {
 		if (x>maxX && hungry.get()) {
 			x=maxX;
 			dropped=true; //user did not manage to catch this word
+			System.out.println(getWord() + "  was dropped.");
 		}
 		//adjust word position to always fit within window
 		if (x>(maxX-(17*(this.word).length())) && !hungry.get()) {
@@ -189,9 +191,11 @@ public class FallingWord {
 	
 	public synchronized void eat(FallingWord other) {
 		//add the score from another word to another if they overlap
+		System.out.println(getWord() + "  ate  " + other.getWord());
 		this.addValue(other.getValue());
 		this.addWeight(other.getWeight());
 		other.resetWord();
+		
 	}
 
 	public synchronized  void drop(int inc) {

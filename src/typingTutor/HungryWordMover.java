@@ -40,13 +40,14 @@ public class HungryWordMover extends WordMover {
 			while (!myWord.dropped() && !done.get()) {
 				    myWord.slide(18);
 				    //hungry word eats any non-hungry words it bumps into
-				    for (FallingWord word : words) {
-				    	synchronized (words) {
+				    synchronized (words) {
+				    	for (FallingWord word : words) {
 				    		if (!word.hungry() && myWord.overlap(word)) {
 				    			myWord.eat(word);
 				    		}
 				    	}
 				    }
+				    
 					try {
 						sleep(myWord.getSpeed());
 					} catch (InterruptedException e) {
