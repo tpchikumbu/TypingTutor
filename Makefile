@@ -25,20 +25,7 @@ run:
 	java -cp $(BINDIR) typingTutor.TypingTutorApp
 
 log:
-	git log | (ln=0; while read l; do echo $ln\: $l; ln=$((ln+1)); done) >> gitlogs.txt
-
-
-#meanserial : $(CLASSES)
-#	java -cp $(BINDIR) MeanFilterSerial	$(input) $(output) $(window)
-#
-#medianserial: $(CLASSES)
-#	java -cp $(BINDIR) MedianFilterSerial $(input) $(output) $(window)
-#
-#meanparallel: $(CLASSES)
-#	java -cp $(BINDIR) MeanFilterParallel $(input) $(output) $(window)	
-#
-#medianparallel: $(CLASSES)
-#	java -cp $(BINDIR) MedianFilterParallel $(input) $(output) $(window)
+	git log | ln=0; while read l; do echo $ln\: $l; ln=$((ln+1)); done >> gitlogs.txt
 
 clean:
 	@rm $(BINDIR)/typingTutor/*.class
